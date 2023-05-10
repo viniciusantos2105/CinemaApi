@@ -13,7 +13,12 @@
         app.engine('handlebars', handle.engine);
         app.set('view engine', 'handlebars');
     //Mongoose
+
 //Rotas
+    app.get('/', (req, res) =>{
+        res.send("Rota principal")
+    })
+
     app.use('/catalog', catalog)
 //Outros
 const PORT = 8081
