@@ -14,9 +14,17 @@ const Movie = new Schema({
         type: String,
         required: true
     },
+    synopsis: {
+        type: String,
+        required: true
+    },
     wallpaper: {
         type: String,
         required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now()
     }
 })
 
