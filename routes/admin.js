@@ -24,8 +24,16 @@ router.post("/register/movie", (req, res) =>{
         erros.push({texto: "Link inválido"})
     }
 
+    if(!req.body.synopsis || typeof req.body.synopsis == undefined || req.body.synopsis == null){
+        erros.push({texto: "Sinopse inválida"})
+    }
+
     if(req.body.name.length < 2){
         erros.push({texto: "Nome do filme é muito pequeno"})
+    }
+
+    if(req.body.synopsis.length < 2){
+        erros.push({texto: "Sinopse é muito curta"})
     }
 
     if(req.body.wallpaper.length < 10){
@@ -39,6 +47,7 @@ router.post("/register/movie", (req, res) =>{
         const newMovie = {
             name: req.body.name,
             classification: req.body.classification,
+            synopsis: req.body.synopsis,
             gender: req.body.gender,
             wallpaper: req.body.wallpaper
         }

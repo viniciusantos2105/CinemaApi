@@ -7,6 +7,8 @@
     const catalog = require("./routes/catalog")
     const admin = require("./routes/admin")
     const mongoose = require("mongoose")
+    require("./models/Movie")
+    const Movie = mongoose.model("movie")
 //Configurações
     //Body Parser
         app.use(bodyParser.urlencoded({extended: true}))
@@ -26,7 +28,9 @@
         })
 //Rotas
     app.get('/', (req, res) =>{
-        res.send("Rota principal")
+        Movie.find().lean().then((movies) =>{
+            res.render("main", {movies: movies})
+        }).catch
     })
     app.use('/admin', admin)
     app.use('/catalog', catalog)
