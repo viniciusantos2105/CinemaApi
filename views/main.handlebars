@@ -1,10 +1,12 @@
 <div class="container text-center">
-    <div class="row row-cols-4" >
+    <div class="row row-cols-4">
         {{#each movies}}
             <div class="card col mt-3" style="width: 18rem; margin-left: 1rem; background-color: rgb(91, 17, 102); border-color: rgb(78, 16, 87);">
                 <img src="{{wallpaper}}" class="card-img-top" alt="..." height="400px">
+                <h4 class="text-light mt-2">{{name}}</h4>
+                <hr style="color: black;">
                 <div class="card-body">
-                    <p class="card-text" style="overflow: hidden; height: 20ch; color:white; ">{{synopsis}}</p>
+                    <p class="card-text text-light" style="overflow: hidden; height: 20ch;">{{synopsis}}</p>
                 </div>
             </div>
         {{else}}
