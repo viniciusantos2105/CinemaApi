@@ -2,20 +2,20 @@
     <div class="alert alert-danger">{{texto}}</div>
 {{else}}
 {{/each}}
-<h4 class="d-flex justify-content-center mt-3">Registrando filme</h4>
-<div class="card container">
+<h4 class="d-flex justify-content-center mt-3 text-light">Registrando filme</h4>
+<div class="card container" style="background-color: rgb(91, 17, 102); border-color: rgb(78, 16, 87);">
     <div class="card-body">
         <form action="/admin/register/movie" method="POST">
             <div class="mb-3">
-                <label for="name" class="form-label">Nome</label>
+                <label for="name" class="form-label text-light">Nome</label>
                 <input type="text" name="name" class="form-control" placeholder="Insira o nome do filme" required>
             </div>
             <div class="mb-3">
-                <label for="wallpaper" class="form-label">Link banner</label>
+                <label for="wallpaper" class="form-label text-light">Link banner</label>
                 <input type="text" name="wallpaper" class="form-control" placeholder="Insira o link do banner" required>
             </div>
            <div class="mb-3">
-            <label for="classification" class="form-label">Classificação indicativa</label>
+            <label for="classification" class="form-label text-light">Classificação indicativa</label>
                  <select class="form-select form-select-lg" name="classification" aria-label=".form-select-lg example" required>
                     <option selected></option>
                     <option value="1" >LIVRE</option>
@@ -27,7 +27,7 @@
                 </select>
            </div>
            <div class="mb-3">
-            <label for="gender" class="form-label">Gênero</label>
+            <label for="gender" class="form-label text-light">Gênero</label>
                  <select class="form-select form-select-lg" name="gender" aria-label=".form-select-lg example" required>
                     <option selected></option>
                     <option value="Acao" >Ação</option>
@@ -39,10 +39,10 @@
                 </select>
            </div>
            <div class="mb-3">
-                <label for="synopsis">Sinopse: </label>
+                <label for="synopsis" class="text-light">Sinopse: </label>
                 <textarea name="synopsis" class="form-control"></textarea>
            </div>
-           <button type="submit" class="btn btn-primary">Registrar</button>
+           <button type="submit" class="btn btn-primary ">Registrar</button>
         </form>
     </div>
 </div>
