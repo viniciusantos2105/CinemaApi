@@ -28,10 +28,17 @@
         })
 //Rotas
     app.get('/', (req, res) =>{
-        Movie.find().lean().then((movies) =>{
+        Movie.find().lean().sort({date: "desc"}).limit(8).then((movies) =>{
             res.render("main", {movies: movies})
-        }).catch
+        })
     })
+
+    app.get("/movie/:id", (req, res)=>{
+       Movie.findById({_id: req.params.id}).lean().then((movie)=>{
+        res.render("movie/main", {movie: movie})
+       })
+    })
+
     app.use('/admin', admin)
     app.use('/catalog', catalog)
 //Outros

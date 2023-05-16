@@ -7,7 +7,7 @@ const Movie = new Schema({
         required: true
     },
     classification: {
-        type: Number,
+        type: String,
         required: true
     },
     gender: {

@@ -1,3 +1,4 @@
+<h4 class="d-flex justify-content-center text-light mt-3">NOVIDADES</h4>
 <div class="container text-center">
     <div class="row row-cols-4">
         {{#each movies}}
@@ -8,6 +9,9 @@
                 <div class="card-body">
                     <p class="card-text text-light" style="overflow: hidden; height: 20ch;">{{synopsis}}</p>
                 </div>
+                <hr>
+                <a  href="/movie/{{_id}}"><button type="submit" class="btn btn-success">Saiba mais</button></a>
+                <br>
             </div>
         {{else}}
             <h5>Nenhuma postagem</h5>
