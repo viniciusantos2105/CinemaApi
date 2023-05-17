@@ -17,8 +17,12 @@
     </div>
     <div>
         <h4 class="text-light">Sessões</h4>
+        <div class="row">
         {{#each session}}
-            <p class="text-light">{{session.hour}}</p>
+                <div class="col">
+                    <p class="text-light border rounded text-center" style="width: 8rem; background-color:gray; cursor: pointer"> {{audio}} {{hour}}</p> 
+                </div>
+        </div>
         {{else}}
             <option value="" class="text-light">Nenhuma sessão registrado</option>
         {{/each}}
