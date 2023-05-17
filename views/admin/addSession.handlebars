@@ -1,0 +1,46 @@
+{{#each erros}}
+    <div class="alert alert-danger">{{texto}}</div>
+{{else}}
+{{/each}}
+<h4 class="d-flex justify-content-center mt-3 text-light">Registrando Sessão de Cinema</h4>
+<div class="card container" style="background-color: rgb(91, 17, 102); border-color: rgb(78, 16, 87);">
+    <div class="card-body">
+        <form action="/admin/register/session/new" method="POST">
+            <div class="mb-3">
+                <label for="hour" class="form-label text-light">Horario da sessão</label>
+                <input type="text" name="hour" class="form-control" placeholder="Insira a hora da sessão" required>
+            </div>
+           <div class="mb-3">
+            <label for="audio" class="form-label text-light">Audio</label>
+                 <select class="form-select form-select-lg" name="audio" aria-label=".form-select-lg example" required>
+                    <option selected></option>
+                    <option value="Dublado" >Dublado</option>
+                    <option value="Legendado">Legendado</option>
+                </select>
+           </div>
+           <div class="mb-3">
+            <label for="movieTheater" class="form-label text-light">Sala</label>
+                 <select class="form-select form-select-lg" name="movieTheater" aria-label=".form-select-lg example" required>
+                    <option selected></option>
+                {{#each movietheather}}
+                    <option value="{{_id}}">{{number}}</option>
+                {{else}}
+                    <option value="">Nenhuma sala registrada</option>
+                {{/each}}
+                </select>
+           </div>
+           <div class="mb-3">
+            <label for="movie" class="form-label text-light">Filme</label>
+                 <select class="form-select form-select-lg" name="movie" aria-label=".form-select-lg example" required>
+                    <option selected></option>
+                {{#each movies}}
+                    <option value="{{_id}}">{{name}}</option>
+                {{else}}
+                    <option value="">Nenhuma filme registrado</option>
+                {{/each}}
+                </select>
+           </div>
+           <button type="submit" class="btn btn-primary ">Registrar</button>
+        </form>
+    </div>
+</div>

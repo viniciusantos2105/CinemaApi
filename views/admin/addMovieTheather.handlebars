@@ -24,30 +24,6 @@
                     <option value="VIP">VIP</option>
                 </select>
            </div>
-           <div class="mb-3">
-                <label for="price" class="form-label text-light">Valor do ingresso</label>
-                <input type="number" name="price" class="form-control" placeholder="Insira o numero de assentos" required>
-            </div>
-           <div class="mb-3">
-           <div class="mb-3">
-            <label for="audio" class="form-label text-light">Audio</label>
-                 <select class="form-select form-select-lg" name="audio" aria-label=".form-select-lg example" required>
-                    <option selected></option>
-                    <option value="Dublado" >Dublado</option>
-                    <option value="Legendado">Legendado</option>
-                </select>
-           </div>
-           <div class="mb-3">
-            <label for="movie" class="form-label text-light">Filme</label>
-                 <select class="form-select form-select-lg" name="movie" aria-label=".form-select-lg example" required>
-                    <option selected></option>
-                {{#each movies}}
-                    <option value="{{_id}}">{{name}}</option>
-                {{else}}
-                    <option value="">Nenhuma filme registrado</option>
-                {{/each}}
-                </select>
-           </div>
            <button type="submit" class="btn btn-primary ">Registrar</button>
         </form>
     </div>

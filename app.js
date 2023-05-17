@@ -9,6 +9,10 @@
     const mongoose = require("mongoose")
     require("./models/Movie")
     const Movie = mongoose.model("movie")
+    require("./models/Session")
+    const Session = mongoose.model("session")
+    require("./models/MovieTheater")
+    const MovieTheater = mongoose.model("movieTheater")
 //Configurações
     //Body Parser
         app.use(bodyParser.urlencoded({extended: true}))
@@ -35,7 +39,19 @@
 
     app.get("/movie/:id", (req, res)=>{
        Movie.findById({_id: req.params.id}).lean().then((movie)=>{
-        res.render("movie/main", {movie: movie})
+
+        if(movie){
+            Session.find(movie).lean().then((session) =>{
+
+                res.render("movie/main", {movie: movie, session: session})
+            }).catch((err) =>{
+                console.log(err)
+                res.redirect("/")
+            })
+        }
+        else{
+            res.redirect("/")
+        }
        })
     })
 

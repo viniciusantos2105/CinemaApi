@@ -13,19 +13,6 @@ const MovieTheater = new Schema({
     seats: {
         type: Number,
         required: true
-    },
-    movie: {
-        type: Schema.Types.ObjectId,
-        ref: "movie",
-        required: true
-    },
-    price: {
-        type: Number,
-        required: true
-    },
-    audio: {
-        type: String,
-        required: true
     }
 })
 

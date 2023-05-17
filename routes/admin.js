@@ -5,12 +5,14 @@ require("../models/Movie")
 const Movie = mongoose.model("movie")
 require("../models/MovieTheater")
 const MovieTheater = mongoose.model("movieTheater")
+require("../models/Session")
+const Session = mongoose.model("session")
 
-router.get('/register', (req, res) =>{
+router.get('/register/movie', (req, res) =>{
     res.render("admin/addMovie")
 })
 
-router.post("/register/movie", (req, res) =>{
+router.post("/register/movie/new", (req, res) =>{
 
     var erros = []
 
@@ -43,7 +45,7 @@ router.post("/register/movie", (req, res) =>{
     }
 
     if(erros.length > 0){
-        res.render("admin/register", {erros: erros})
+        res.render("admin/register/movie", {erros: erros})
     }
     else{
         const newMovie = {
@@ -85,25 +87,14 @@ router.post("/register/movieTheater/new", (req, res)=>{
         erros.push({texto: "Numero de assentos inválido"})
     }
 
-    if(!req.body.price || typeof req.body.price == undefined || req.body.price == null){
-        erros.push({texto: "Preço inválido"})
-    }
-
-    if(!req.body.audio || typeof req.body.audio == undefined || req.body.audio == null){
-        erros.push({texto: "Audio inválido"})
-    }
-
     if(erros.length > 0){
-        res.render("admin/register", {erros: erros})
+        res.render("admin/register/movieTheater", {erros: erros})
     }
     else{
         const newMovieTheather = {
             number: req.body.number,
             type: req.body.type,
             seats: req.body.seats,
-            movie: req.body.movie,
-            price: req.body.price,
-            audio: req.body.audio
         }
 
         new MovieTheater(newMovieTheather).save().then(() =>{
@@ -114,6 +105,59 @@ router.post("/register/movieTheater/new", (req, res)=>{
             console.log("Erro ao salvar filme")
         })
     }
+})
+
+router.get("/register/session", (req, res)=>{
+    Movie.find().lean().sort({date: "desc"}).then((movies) =>{
+        MovieTheater.find().lean().then((movietheather) =>{
+            res.render("admin/addSession", {movies: movies, movietheather: movietheather})
+        }).catch((err)=>{
+            console.log(err)
+        })
+    })
+})
+
+router.post("/register/session/new", (req, res)=>{
+
+    var erros = []
+
+    if(!req.body.hour || typeof req.body.hour == undefined || req.body.hour == null){
+        erros.push({texto: "Hora inválida"})
+    }
+
+    if(!req.body.movie || typeof req.body.movie == undefined || req.body.movie == null){
+        erros.push({texto: "Filme inválido"})
+    }
+
+    if(!req.body.movieTheater || typeof req.body.movieTheater == undefined || req.body.movieTheater == null){
+        erros.push({texto: "Sala inválida"})
+    }
+
+    if(!req.body.audio || typeof req.body.audio == undefined || req.body.audio == null){
+        erros.push({texto: "Audio inválido"})
+    }
+
+    if(erros.length > 0){
+        res.render("admin/register/session", {erros: erros})
+    }
+    else{
+        const newSession = ({
+            hour: req.body.hour,
+            movie: req.body.movie,
+            movieTheater: req.body.movieTheater,
+            audio: req.body.audio
+        })
+
+        new Session(newSession).save().then(()=>{
+            console.log("Sessão salva com sucesso!")
+            res.redirect("/")
+        }).catch((err) =>{
+            console.log(err)
+            console.log("Erro ao salvar filme")
+        })
+        
+    }
+
 })
 
 module.exports = router
