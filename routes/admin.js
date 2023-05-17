@@ -3,9 +3,11 @@ const router = express.Router()
 const mongoose = require("mongoose")
 require("../models/Movie")
 const Movie = mongoose.model("movie")
+require("../models/MovieTheater")
+const MovieTheater = mongoose.model("movieTheater")
 
 router.get('/register', (req, res) =>{
-    res.render("admin/register")
+    res.render("admin/addMovie")
 })
 
 router.post("/register/movie", (req, res) =>{
@@ -56,6 +58,59 @@ router.post("/register/movie", (req, res) =>{
             console.log("Filme salvo com sucesso!")
             res.redirect("/")
         }).catch((err) =>{
+            console.log("Erro ao salvar filme")
+        })
+    }
+})
+
+router.get("/register/movieTheater", (req, res) =>{
+    Movie.find().lean().sort({date: "desc"}).then((movies) =>{
+        res.render("admin/addMovieTheather", {movies: movies})
+    })
+})
+
+router.post("/register/movieTheater/new", (req, res)=>{
+
+    var erros = []
+
+    if(!req.body.number || typeof req.body.number == undefined || req.body.number == null){
+        erros.push({texto: "Numero inválido"})
+    }
+
+    if(!req.body.type || typeof req.body.type == undefined || req.body.type == null){
+        erros.push({texto: "Tipo inválido"})
+    }
+
+    if(!req.body.seats || typeof req.body.seats == undefined || req.body.seats == null){
+        erros.push({texto: "Numero de assentos inválido"})
+    }
+
+    if(!req.body.price || typeof req.body.price == undefined || req.body.price == null){
+        erros.push({texto: "Preço inválido"})
+    }
+
+    if(!req.body.audio || typeof req.body.audio == undefined || req.body.audio == null){
+        erros.push({texto: "Audio inválido"})
+    }
+
+    if(erros.length > 0){
+        res.render("admin/register", {erros: erros})
+    }
+    else{
+        const newMovieTheather = {
+            number: req.body.number,
+            type: req.body.type,
+            seats: req.body.seats,
+            movie: req.body.movie,
+            price: req.body.price,
+            audio: req.body.audio
+        }
+
+        new MovieTheater(newMovieTheather).save().then(() =>{
+            console.log("Sala salva com sucesso!")
+            res.redirect("/")
+        }).catch((err) =>{
+            console.log(err)
             console.log("Erro ao salvar filme")
         })
     }
