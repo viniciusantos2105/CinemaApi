@@ -41,7 +41,6 @@
        Movie.findById({_id: req.params.id}).lean().then((movie)=>{
         if(movie){
             Session.find({movie: movie._id}).lean().then((session) =>{
-                
                 res.render("movie/main", {movie: movie, session: session})
             }).catch((err) =>{
                 console.log(err)

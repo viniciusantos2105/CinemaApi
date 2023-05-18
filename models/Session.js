@@ -11,6 +11,10 @@ const Session = new Schema({
         ref: "movie",
         required: true
     },
+    type: {
+        type: String,
+        required: true
+    },
     movieTheater: {
         type: Schema.Types.ObjectId,
         ref: "movieTheater",

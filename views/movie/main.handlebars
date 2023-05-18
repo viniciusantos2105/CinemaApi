@@ -18,13 +18,15 @@
     <div>
         <h4 class="text-light">Sessões</h4>
         <div class="row">
+            {{theater.number}}
         {{#each session}}
                 <div class="col">
-                    <p class="text-light border rounded text-center" style="width: 8rem; background-color:gray; cursor: pointer"> {{audio}} {{hour}}</p> 
+                    <p class="text-light border rounded text-center" style="width: 10rem; background-color:gray; cursor: pointer">{{type}} {{audio}} {{hour}}</p> 
                 </div>
         </div>
         {{else}}
             <option value="" class="text-light">Nenhuma sessão registrado</option>
         {{/each}}
+        
     </div>
 </div>

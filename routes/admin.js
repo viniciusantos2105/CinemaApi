@@ -148,12 +148,15 @@ router.post("/register/session/new", (req, res)=>{
             audio: req.body.audio
         })
 
-        new Session(newSession).save().then(()=>{
-            console.log("Sessão salva com sucesso!")
-            res.redirect("/")
-        }).catch((err) =>{
-            console.log(err)
-            console.log("Erro ao salvar filme")
+        MovieTheater.findById(req.body.movieTheater).lean().then((movieTheater)=>{
+            newSession.type = movieTheater.type
+            new Session(newSession).save().then(()=>{
+                console.log("Sessão salva com sucesso!")
+                res.redirect("/")
+            }).catch((err) =>{
+                console.log(err)
+                console.log("Erro ao salvar filme")
+            })
         })
         
     }
