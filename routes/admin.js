@@ -163,4 +163,42 @@ router.post("/register/session/new", (req, res)=>{
 
 })
 
+router.get("/edit", (req, res)=>{
+    Session.find().lean().then((session)=>{
+        Movie.find().lean().sort({date: "desc"}).then((movies) =>{
+            res.render("admin/movies", {movies: movies})
+        })
+    })
+})
+
+router.get("/edit/movie/:id", (req, res)=>{
+    Movie.findById({_id: req.params.id}).lean().then((movie)=>{
+        if(movie){
+            Session.find({movie: movie._id}).lean().then((session) =>{
+                res.render("admin/editMovie", {movie: movie, session: session})
+            }).catch((err) =>{
+                console.log(err)
+                res.redirect("/")
+            })
+        }
+        else{
+            res.redirect("/")
+        }
+       })
+})
+
+router.post("/edit/movie/update", (req, res)=>{
+    Movie.findOne({_id: req.body.id}).then((movie)=>{
+        movie.name = req.body.name,
+        movie.classification = req.body.classification,
+        movie.gender = req.body.gender,
+        movie.synopsis = req.body.synopsis,
+        movie.wallpaper = req.body.wallpaper
+
+        movie.save().then(()=>{
+            res.redirect("/admin/edit")
+        })
+    })
+})
+
 module.exports = router

@@ -1,0 +1,68 @@
+<div class="container mt-4">
+    {{#each erros}}
+    <div class="alert alert-danger">{{texto}}</div>
+{{else}}
+{{/each}}
+<h4 class="d-flex justify-content-center mt-3 text-light">Registrando filme</h4>
+<div class="card container" style="background-color: rgb(91, 17, 102); border-color: rgb(78, 16, 87);">
+    <div class="card-body">
+        <form action="/admin/edit/movie/update" method="POST">
+            <input type="hidden" name="id" value="{{movie._id}}">
+            <div class="mb-3">
+                <label for="name" class="form-label text-light">Nome</label>
+                <input type="text" name="name" class="form-control" placeholder="Insira o nome do filme" value="{{movie.name}}" required>
+            </div>
+            <div class="mb-3">
+                <label for="wallpaper" class="form-label text-light">Link banner</label>
+                <input type="text" name="wallpaper" class="form-control" placeholder="Insira o link do banner" value="{{movie.wallpaper}}" required>
+            </div>
+           <div class="mb-3">
+            <label for="classification" class="form-label text-light">Classificação indicativa</label>
+                 <select class="form-select form-select-lg" name="classification" aria-label=".form-select-lg example" required>
+                    <option selected>{{movie.classification}}</option>
+                    <option value="LIVRE" >LIVRE</option>
+                    <option value="10 anos">10 anos</option>
+                    <option value="12 anos">12 anos</option>
+                    <option value="14 anos">14 anos</option>
+                    <option value="16 anos">16 anos</option>
+                    <option value="18 anos">18 anos</option>
+                </select>
+           </div>
+           <div class="mb-3">
+            <label for="gender" class="form-label text-light">Gênero</label>
+                 <select class="form-select form-select-lg" name="gender" aria-label=".form-select-lg example" required>
+                    <option selected>{{movie.gender}}</option>
+                    <option value="Ação" >Ação</option>
+                    <option value="Aventura">Aventura</option>
+                    <option value="Comedia">Comédia</option>
+                    <option value="Fantasia">Fantasia</option>
+                    <option value="Romance">Romance</option>
+                    <option value="Terror">Terror</option>
+                </select>
+           </div>
+           <div class="mb-3">
+                <label for="synopsis" class="text-light">Sinopse: </label>
+                <textarea name="synopsis" class="form-control">{{movie.synopsis}}</textarea>
+           </div>
+           <button type="submit" class="btn btn-primary ">Registrar</button>
+        </form>
+    </div>
+</div>
+
+    <div>
+        <h4 class="text-light">Sessões</h4>
+        <div class="row">
+            {{theater.number}}
+        {{#each session}}
+                <div class="col mt-2">
+                    <p class="text-light border rounded text-center" style="width: 10rem; background-color:gray; cursor: pointer">{{type}} {{audio}} {{hour}}</p> 
+                    <a  href="/admin/movie/{{_id}}"><button type="submit" class="btn btn-success col">Editar</button></a>
+                    <a  href="/admin/movie/{{_id}}"><button type="submit" class="btn btn-danger col">Excluir</button></a>
+                </div>
+        </div>
+        {{else}}
+            <option value="" class="text-light">Nenhuma sessão registrado</option>
+        {{/each}}
+        
+    </div>
+</div>
