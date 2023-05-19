@@ -197,8 +197,50 @@ router.post("/edit/movie/update", (req, res)=>{
 
         movie.save().then(()=>{
             res.redirect("/admin/edit")
+        }).catch((err)=>{
+            console.log(err)
+            res.redirect("/")
         })
     })
+})
+
+router.get("/edit/session/:id", (req, res)=>{
+    Movie.find().lean().sort({date: "desc"}).then((movies) =>{
+        MovieTheater.find().lean().then((movietheather) =>{
+            Session.findById({_id: req.params.id}).lean().then((session)=>{
+                const str = session.movieTheater
+                MovieTheater.findById({_id: str.toString()}).lean().then((theater)=>{
+                    const string = session.movie
+                    Movie.findById({_id: string.toString()}).lean().then((onemovie)=>{
+                        res.render("admin/editSession", {session: session, movies: movies, movietheather: movietheather, theater: theater, onemovie: onemovie})  
+                    })
+                })
+            }).catch((err) =>{
+                console.log(err)
+                res.redirect("/")
+            })  
+        })
+
+    })
+})
+
+router.post("/edit/session/update", (req, res)=>{
+    MovieTheater.findById({_id: req.body.movieTheater}).lean().then((movieTheater)=>{
+        Session.findOne({_id: req.body.id}).then((session)=>{
+            session.hour = req.body.hour,
+            session.movie = req.body.movie,
+            session.type = movieTheater.type,
+            session.movieTheater = req.body.movieTheater,
+            session.audio = req.body.audio
+
+            session.save().then(()=>{
+                res.redirect("/admin/edit")
+            }).catch((err) =>{
+                console.log(err)
+                res.redirect("/")
+                })  
+            })
+        })
 })
 
 module.exports = router

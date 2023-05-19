@@ -44,7 +44,7 @@
                 <label for="synopsis" class="text-light">Sinopse: </label>
                 <textarea name="synopsis" class="form-control">{{movie.synopsis}}</textarea>
            </div>
-           <button type="submit" class="btn btn-primary ">Registrar</button>
+           <button type="submit" class="btn btn-primary ">Atualizar</button>
         </form>
     </div>
 </div>
@@ -56,7 +56,7 @@
         {{#each session}}
                 <div class="col mt-2">
                     <p class="text-light border rounded text-center" style="width: 10rem; background-color:gray; cursor: pointer">{{type}} {{audio}} {{hour}}</p> 
-                    <a  href="/admin/movie/{{_id}}"><button type="submit" class="btn btn-success col">Editar</button></a>
+                    <a  href="/admin/edit/session/{{_id}}"><button type="submit" class="btn btn-success col">Editar</button></a>
                     <a  href="/admin/movie/{{_id}}"><button type="submit" class="btn btn-danger col">Excluir</button></a>
                 </div>
         </div>
