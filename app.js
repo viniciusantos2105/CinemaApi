@@ -6,6 +6,7 @@
     const app = express()
     const catalog = require("./routes/catalog")
     const admin = require("./routes/admin")
+    const user = require("./routes/user")
     const mongoose = require("mongoose")
     require("./models/Movie")
     const Movie = mongoose.model("movie")
@@ -55,6 +56,7 @@
 
     app.use('/admin', admin)
     app.use('/catalog', catalog)
+    app.use('/user', user)
 //Outros
 const PORT = 8081
 app.listen(PORT, () =>{

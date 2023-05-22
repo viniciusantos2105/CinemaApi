@@ -150,6 +150,7 @@ router.post("/register/session/new", (req, res)=>{
 
         MovieTheater.findById(req.body.movieTheater).lean().then((movieTheater)=>{
             newSession.type = movieTheater.type
+            newSession.seats = movieTheater.seats
             new Session(newSession).save().then(()=>{
                 console.log("Sessão salva com sucesso!")
                 res.redirect("/")
@@ -194,6 +195,7 @@ router.post("/edit/movie/update", (req, res)=>{
         movie.gender = req.body.gender,
         movie.synopsis = req.body.synopsis,
         movie.wallpaper = req.body.wallpaper
+    
 
         movie.save().then(()=>{
             res.redirect("/admin/edit")
@@ -231,10 +233,12 @@ router.post("/edit/session/update", (req, res)=>{
             session.movie = req.body.movie,
             session.type = movieTheater.type,
             session.movieTheater = req.body.movieTheater,
-            session.audio = req.body.audio
+            session.audio = req.body.audio,
+            session.seats = movieTheater.seats
 
             session.save().then(()=>{
                 res.redirect("/admin/edit")
+                console.log(session)
             }).catch((err) =>{
                 console.log(err)
                 res.redirect("/")
@@ -242,5 +246,6 @@ router.post("/edit/session/update", (req, res)=>{
             })
         })
 })
+
 
 module.exports = router
