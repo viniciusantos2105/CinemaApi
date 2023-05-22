@@ -2,8 +2,6 @@
     <div class="alert alert-danger">{{texto}}</div>
 {{else}}
 {{/each}}
-
-
 <div class="container mt-4">
     <div class="row" style="background-color: rgb(91, 17, 102);">
         <div class="d-flex justify-content-center" style="width: 18rem; margin-left: 3rem; background-color: rgb(91, 17, 102); border: 0px" >
@@ -12,27 +10,30 @@
         <div class="col-8 mt-3 text-light" style="width: 50rem;">
             <h4 class="text-center">{{movie.name}}</h4>
             <hr>
-            <p>Tipo: {{session.type}} <br> Horario: {{session.hour}} <br> Audio: {{session.audio}}</p>
+            <p>Tipo: {{session.type}} <br> Horario: {{session.hour}} <br> Audio: {{session.audio}} <br> Sala: {{theater.number}}</p>
             <hr>
-            <div class="card-body">
-        <form action="/admin/edit/session/update" method="POST">
-        <input type="hidden" name="id" value="{{session._id}}">
+        <div class="card-body">
+        <form action="/user/buy/ticket" method="POST">
+            <input type="hidden" name="id" value="{{session._id}}">
+                <div class="mb-3">
+                    <label for="type" class="form-label text-light">Tipo de ingresso</label>
+                    <select class="form-select form-select-lg" name="type" aria-label=".form-select-lg example" >
+                        <option selected></option>
+                        <option value="INTEIRA" >INTEIRA: R$32,00</option>
+                        <option value="MEIA">MEIA: R$16,00</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="quantity" class="form-label text-light">Quantidade de ingressos</label>
+                    <input type="number" name="quantity" class="form-control" placeholder="Insira o numero de ingressos" >
+                </div>
             <div class="mb-3">
-                <label for="type" class="form-label text-light">Tipo de ingresso</label>
-                 <select class="form-select form-select-lg" name="type" aria-label=".form-select-lg example" >
-                    <option selected></option>
-                    <option value="INTEIRA" >INTEIRA: R$32,00</option>
-                    <option value="MEIA">MEIA: R$16,00</option>
-                 </select>
-           </div>
-           <div class="mb-3">
-                <label for="number" class="form-label text-light">Quantidade de ingressos</label>
-                <input type="number" name="number" class="form-control" placeholder="Insira o numero de ingressos" >
-            </div>
-           <div class="mb-3">
-           <div class="mb-3">
-           <button type="submit" class="btn btn-success ">Comprar</button>
-           <a href="/movie/{{movie._id}}"><button type="submit" class="btn btn-primary ">Voltar</button></a>
+            <div class="mb-3">
+            <input type="hidden" name="hour" value="{{session.hour}}">
+            <input type="hidden" name="movie" value="{{movie.name}}">
+            <input type="hidden" name="theater" value="{{theater.number}}">
+            <button type="submit" class="btn btn-success ">Comprar</button>
+        </form>
         </div>
     </div>
 </div>
