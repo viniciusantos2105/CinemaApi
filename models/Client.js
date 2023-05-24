@@ -10,9 +10,9 @@ const Client = new Schema({
         type: String,
         required: true
     },
-    tickets: {
-        type: [Schema.Types.ObjectId],
-        ref: "ticket",
+    ticket: {
+        type: Array,
+        default: new Array(),
         required: true
     },
     eAdmin:{

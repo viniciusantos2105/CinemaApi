@@ -1,0 +1,33 @@
+<div class="container mt-4">
+    <div class="row" style="background-color: rgb(91, 17, 102);">
+        <div class="d-flex justify-content-center" style="width: 18rem; margin-left: 3rem; background-color: rgb(91, 17, 102); border: 0px" >
+            <img src="{{movie.wallpaper}}" class="card-img-top center" alt="..." height="400px" style="cursor: pointer;">
+        </div>
+        <div class="col-8 mt-3 text-light" style="width: 50rem;">
+            <h4 class="text-center">{{client.ticket}}</h4>
+            <hr>
+            <p>Classificação: {{movie.classification}} <br> Gênero: {{movie.gender}}</p>
+            <hr>
+            <p class="fw-bold"> Sinopse: 
+                <p>
+                    {{movie.synopsis}}
+                </p>
+            </p>
+        </div>
+    </div>
+    <div>
+        <h4 class="text-light">Sessões</h4>
+        <div class="row">
+            {{theater.number}}
+        {{#each ticket}}
+                <div class="col">
+                    <p class="text-light border rounded text-center mt-2" style="width: 10rem; background-color:gray; cursor: pointer">{{price}} {{type}} {{hour}}</p>
+                    <a  href="/user/buy/ticket/{{_id}}"><button type="submit" class="btn btn-primary">Comprar</button></a>
+                </div>
+        </div>
+        {{else}}
+            <option value="" class="text-light">Nenhuma sessão registrado</option>
+        {{/each}}
+        
+    </div>
+</div>
