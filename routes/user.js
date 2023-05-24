@@ -29,7 +29,6 @@ router.post("/login", (req, res, next) =>{
 router.get('/logout', (req, res, next) => {
     req.logout(function(err) {
         if (err) { return next(err) }
-        req.flash("success_msg", "Deslogado com sucesso")
         res.redirect('/')
       })
 })
@@ -92,42 +91,47 @@ router.get("/buy/ticket/:id", (req, res)=>{
 })
 
 router.post("/buy/ticket", (req, res)=>{
-
-    const newTicket = ({
-        type: req.body.type,
-        movie: req.body.movie,
-        movieTheater: req.body.theater,
-        hour: req.body.hour,
-        quantity: req.body.quantity,
-        price: 0
-    })
-    if(newTicket.type == 'INTEIRA' && newTicket.quantity > 1){
-        newTicket.price = 32.00 * newTicket.quantity
-        new Ticket(newTicket).save().then(()=>{
-            console.log("Ticket comprado com sucesso")
-            res.render("user/buySuccess")
+    if(req.user){
+        const newTicket = ({
+            type: req.body.type,
+            movie: req.body.movie,
+            movieTheater: req.body.theater,
+            hour: req.body.hour,
+            quantity: req.body.quantity,
+            price: 0
         })
+        if(newTicket.type == 'INTEIRA' && newTicket.quantity > 1){
+            newTicket.price = 32.00 * newTicket.quantity
+            new Ticket(newTicket).save().then(()=>{
+                console.log("Ticket comprado com sucesso")
+                res.render("user/buySuccess")
+            })
+        }
+        else if(newTicket.type == 'INTEIRA' && newTicket.quantity == 1){
+            newTicket.price = 32.00 
+            new Ticket(newTicket).save().then(()=>{
+                console.log("Ticket comprado com sucesso")
+                res.render("user/buySuccess")
+            })
+        }
+        else if(newTicket.type == 'MEIA' && newTicket.quantity > 1){
+            newTicket.price = 16.00 * newTicket.quantity
+            new Ticket(newTicket).save().then(()=>{
+                console.log("Ticket comprado com sucesso")
+                res.render("user/buySuccess")
+            })
+        }
+        else if(newTicket.type == 'MEIA' && newTicket.quantity == 1){
+            newTicket.price = 16.00
+            new Ticket(newTicket).save().then(()=>{
+                console.log("Ticket comprado com sucesso")
+                res.redirect("/")
+            })
+        }
     }
-    else if(newTicket.type == 'INTEIRA' && newTicket.quantity == 1){
-        newTicket.price = 32.00 
-        new Ticket(newTicket).save().then(()=>{
-            console.log("Ticket comprado com sucesso")
-            res.render("user/buySuccess")
-        })
-    }
-    else if(newTicket.type == 'MEIA' && newTicket.quantity > 1){
-        newTicket.price = 16.00 * newTicket.quantity
-        new Ticket(newTicket).save().then(()=>{
-            console.log("Ticket comprado com sucesso")
-            res.render("user/buySuccess")
-        })
-    }
-    else if(newTicket.type == 'MEIA' && newTicket.quantity == 1){
-        newTicket.price = 16.00
-        new Ticket(newTicket).save().then(()=>{
-            console.log("Ticket comprado com sucesso")
-            res.redirect("/")
-        })
+    else{
+        req.flash("error_msg", "Faça login para compra ingresso!")
+        res.redirect("/user/login")
     }
 })
 
