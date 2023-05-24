@@ -1,0 +1,16 @@
+<div class="card container mt-3 col col-lg-4" style="background-color: rgb(91, 17, 102); border-color: rgb(78, 16, 87);">
+    <div class="card-body">
+        <form action="/user/login" method="POST">
+            <div class="mb-3">
+                <label for="email" class="form-label text-light">Login</label>
+                <input type="email" name="email" class="form-control" placeholder="Digite o login" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label text-light">Senha</label>
+                <input type="password" name="password" class="form-control" placeholder="Digite a senha" required>
+            </div>
+           <a href=""><button type="submit" class="btn btn-primary" style="width: 100%;">Entrar</button></a>
+        </form>
+        <a href="/user/register"><button type="submit" class="btn btn-success mt-2" style="width: 100%;">Cadastro</button></a>
+    </div>
+</div>
