@@ -101,59 +101,94 @@ router.post("/buy/ticket", (req, res)=>{
             quantity: req.body.quantity,
             price: 0
         })
+        
+        Session.findOne({_id: req.body.session}).then((session)=>{
+            Client.findOne({_id: req.user.id}).then((client)=>{
+                if(newTicket.type == 'INTEIRA' && newTicket.quantity > 1){
+                    newTicket.price = 32.00 * newTicket.quantity
+                    new Ticket(newTicket).save().then(()=>{
+                        client.ticket.unshift(newTicket)
 
-        Client.findOne({_id: req.user.id}).then((client)=>{
-            console.log(client)
-            if(newTicket.type == 'INTEIRA' && newTicket.quantity > 1){
-                newTicket.price = 32.00 * newTicket.quantity
-                new Ticket(newTicket).save().then(()=>{
-                    client.ticket.unshift(newTicket)
+                        session.seats = session.seats - newTicket.quantity;
 
-                    client.save().then(()=>{
-                        console.log("Ticket comprado com sucesso")
-                        res.render("user/buySuccess")
+                        session.save().then(()=>{
+                            client.save().then(()=>{
+                                req.flash("success_msg", "Compra realizada com sucesso!")
+                                res.redirect("/user/ticket")
+                            }).catch((err)=>{
+                                req.flash("error_msg", "Houve um erro ao realizar a compra, tente novamente!")
+                                res.redirect("/catalog")
+                            })
+                        }).catch((err)=>{
+                            req.flash("error_msg", "Houve um erro na sessão")
+                            res.redirect("/catalog")
+                        })
                     })
-                }).catch((err)=>
-                    console.log(err),
-                    res.redirect("/")
-                )
-            }
-            else if(newTicket.type == 'INTEIRA' && newTicket.quantity == 1){
-                newTicket.price = 32.00 
-                new Ticket(newTicket).save().then(()=>{
-                    client.ticket.unshift(newTicket)
+                }
+                else if(newTicket.type == 'INTEIRA' && newTicket.quantity == 1){
+                    newTicket.price = 32.00 
+                    new Ticket(newTicket).save().then(()=>{
+                        client.ticket.unshift(newTicket)
+    
+                        session.seats = session.seats - newTicket.quantity;
 
-                    client.save().then(()=>{
-                        console.log("Ticket comprado com sucesso")
-                        res.render("user/buySuccess")
-                    }).catch((err)=>
-                        console.log(err),
-                        res.redirect("/")
-                    )
-                })
-            }
-            else if(newTicket.type == 'MEIA' && newTicket.quantity > 1){
-                newTicket.price = 16.00 * newTicket.quantity
-                new Ticket(newTicket).save().then(()=>{
-                    client.ticket.unshift(newTicket)
-
-                    client.save().then(()=>{
-                        console.log("Ticket comprado com sucesso")
-                        res.render("user/buySuccess")
+                        session.save().then(()=>{
+                            client.save().then(()=>{
+                                req.flash("success_msg", "Compra realizada com sucesso!")
+                                res.redirect("/user/ticket")
+                            }).catch((err)=>{
+                                req.flash("error_msg", "Houve um erro ao realizar a compra, tente novamente!")
+                                res.redirect("/catalog")
+                            })
+                        }).catch((err)=>{
+                            req.flash("error_msg", "Houve um erro na sessão")
+                            res.redirect("/catalog")
+                        })
                     })
-                })
-            }
-            else if(newTicket.type == 'MEIA' && newTicket.quantity == 1){
-                newTicket.price = 16.00
-                new Ticket(newTicket).save().then(()=>{
-                    client.ticket.unshift(newTicket)
+                }
+                else if(newTicket.type == 'MEIA' && newTicket.quantity > 1){
+                    newTicket.price = 16.00 * newTicket.quantity
+                    new Ticket(newTicket).save().then(()=>{
+                        client.ticket.unshift(newTicket)
+    
+                        session.seats = session.seats - newTicket.quantity;
 
-                    client.save().then(()=>{
-                        console.log("Ticket comprado com sucesso")
-                        res.render("user/buySuccess")
+                        session.save().then(()=>{
+                            client.save().then(()=>{
+                                req.flash("success_msg", "Compra realizada com sucesso!")
+                                res.redirect("/user/ticket")
+                            }).catch((err)=>{
+                                req.flash("error_msg", "Houve um erro ao realizar a compra, tente novamente!")
+                                res.redirect("/catalog")
+                            })
+                        }).catch((err)=>{
+                            req.flash("error_msg", "Houve um erro na sessão")
+                            res.redirect("/catalog")
+                        })
                     })
-                })
-            }
+                }
+                else if(newTicket.type == 'MEIA' && newTicket.quantity == 1){
+                    newTicket.price = 16.00
+                    new Ticket(newTicket).save().then(()=>{
+                        client.ticket.unshift(newTicket)
+    
+                        session.seats = session.seats - newTicket.quantity;
+
+                        session.save().then(()=>{
+                            client.save().then(()=>{
+                                req.flash("success_msg", "Compra realizada com sucesso!")
+                                res.redirect("/user/ticket")
+                            }).catch((err)=>{
+                                req.flash("error_msg", "Houve um erro ao realizar a compra, tente novamente!")
+                                res.redirect("/catalog")
+                            })
+                        }).catch((err)=>{
+                            req.flash("error_msg", "Houve um erro na sessão")
+                            res.redirect("/catalog")
+                        })
+                    })
+                }
+            })
         })
     }
     else{
@@ -165,7 +200,7 @@ router.post("/buy/ticket", (req, res)=>{
 router.get("/ticket", (req, res)=>{
     Client.findOne({_id: req.user.id}).then((client)=>{
         const tickets = client.ticket
-        res.render("user/userTicket", {tickets: tickets})
+        res.render("user/userTicket", {tickets: tickets, client: client})
     })
 })
 

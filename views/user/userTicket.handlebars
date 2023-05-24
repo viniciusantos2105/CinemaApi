@@ -1,33 +1,23 @@
-<div class="container mt-4">
-    <div class="row" style="background-color: rgb(91, 17, 102);">
-        <div class="d-flex justify-content-center" style="width: 18rem; margin-left: 3rem; background-color: rgb(91, 17, 102); border: 0px" >
-            <img src="{{movie.wallpaper}}" class="card-img-top center" alt="..." height="400px" style="cursor: pointer;">
-        </div>
-        <div class="col-8 mt-3 text-light" style="width: 50rem;">
-            <h4 class="text-center">{{client.ticket}}</h4>
+<div style="background-color: black; height: 2rem">
+    <h4 class="d-flex justify-content-center text-light" style="background-color: black;">INGRESSOS</h4>
+</div>
+<div class="container d-flex align-items-center flex-column  mt-4 text-center">
+    {{#each tickets}}
+    <div class="mt-4" style="background-color: rgb(235, 235, 235); width: 30rem;">
+        <div class="mt-3">
+            <h4>CINE API - SALA {{movieTheater}}</h4>
             <hr>
-            <p>Classificação: {{movie.classification}} <br> Gênero: {{movie.gender}}</p>
+            <h5 class="fw-bold">{{movie}}</h5>
+            <p>TIPO: {{type}} | HORARIO: {{hour}} <br></p>
             <hr>
-            <p class="fw-bold"> Sinopse: 
-                <p>
-                    {{movie.synopsis}}
-                </p>
+            <p class="fw-bold">
+                Nº INGRESSOS: {{quantity}}
+                <br>
+                PREÇO: R${{price}}
             </p>
         </div>
     </div>
-    <div>
-        <h4 class="text-light">Sessões</h4>
-        <div class="row">
-            {{theater.number}}
-        {{#each ticket}}
-                <div class="col">
-                    <p class="text-light border rounded text-center mt-2" style="width: 10rem; background-color:gray; cursor: pointer">{{price}} {{type}} {{hour}}</p>
-                    <a  href="/user/buy/ticket/{{_id}}"><button type="submit" class="btn btn-primary">Comprar</button></a>
-                </div>
-        </div>
-        {{else}}
+    {{else}}
             <option value="" class="text-light">Nenhuma sessão registrado</option>
-        {{/each}}
-        
-    </div>
+    {{/each}}
 </div>

@@ -10,7 +10,7 @@
         <div class="col-8 mt-3 text-light" style="width: 50rem;">
             <h4 class="text-center">{{movie.name}}</h4>
             <hr>
-            <p>Tipo: {{session.type}} <br> Horario: {{session.hour}} <br> Audio: {{session.audio}} <br> Sala: {{theater.number}}</p>
+            <p>Ingressos disponiveis: {{session.seats}} <br> Tipo: {{session.type}} <br> Horario: {{session.hour}} <br> Audio: {{session.audio}} <br> Sala: {{theater.number}}</p>
             <hr>
         <div class="card-body">
         <form action="/user/buy/ticket" method="POST">
@@ -32,6 +32,7 @@
             <input type="hidden" name="hour" value="{{session.hour}}">
             <input type="hidden" name="movie" value="{{movie.name}}">
             <input type="hidden" name="theater" value="{{theater.number}}">
+            <input type="hidden" name="session" value="{{session._id}}">
             <button type="submit" class="btn btn-success ">Comprar</button>
         </form>
         </div>
