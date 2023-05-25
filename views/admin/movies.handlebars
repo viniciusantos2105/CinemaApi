@@ -14,12 +14,15 @@
                 <hr>
                     <div class="row row-cols-3 justify-content-center">
                         <a  href="/admin/edit/movie/{{_id}}"><button type="submit" class="btn btn-success col">Editar</button></a>
-                        <a  href="/admin/delete/movie/{{_id}}"><button type="submit" class="btn btn-danger col">Excluir</button></a>
+                        <form action="/admin/movie/delete" method="POST" class="col">
+                            <input type="hidden" name="id" value="{{_id}}">
+                            <button type="submit" class="btn btn-danger col">Excluir</button>
+                        </form>
                     </div>
                 <br>
             </div>
         {{else}}
-            <h5>Nenhuma postagem</h5>
+            <h5>Nenhum Filme disponivel</h5>
         {{/each}}
     </div>
 </div>

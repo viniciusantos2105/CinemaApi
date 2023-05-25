@@ -169,6 +169,26 @@ router.post("/register/session/new", eAdmin, (req, res)=>{
 
 })
 
+router.post("/session/delete", eAdmin, (req, res) =>{
+    Session.deleteOne({_id: req.body.id}).then(()=>{
+        req.flash("success_msg", "Sessão deletada com sucesso!!")
+        res.redirect("/admin/edit")
+    }).catch((err) =>{
+        req.flash("error_msg", "Houve um erro ao deletar a categoria")
+        res.redirect("/admin/edit")
+    })
+})
+
+router.post("/movie/delete", eAdmin, (req, res) =>{
+    Movie.deleteOne({_id: req.body.id}).then(()=>{
+        req.flash("success_msg", "Sessão deletada com sucesso!!")
+        res.redirect("/admin/edit")
+    }).catch((err) =>{
+        req.flash("error_msg", "Houve um erro ao deletar a categoria")
+        res.redirect("/admin/edit")
+    })
+})
+
 router.get("/edit", eAdmin, (req, res)=>{
     Session.find().lean().then((session)=>{
         Movie.find().lean().sort({date: "desc"}).then((movies) =>{
