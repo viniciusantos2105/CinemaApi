@@ -65,7 +65,8 @@ router.post("/register/movie/new", eAdmin, (req, res) =>{
             console.log("Filme salvo com sucesso!")
             res.redirect("/")
         }).catch((err) =>{
-            console.log("Erro ao salvar filme")
+            req.flash("error_msg", "Houve um erro ao criar filme, tente novamente!")
+            res.redirect("/register/movie")
         })
     }
 })
@@ -106,8 +107,8 @@ router.post("/register/movieTheater/new", eAdmin, (req, res)=>{
             console.log("Sala salva com sucesso!")
             res.redirect("/")
         }).catch((err) =>{
-            console.log(err)
-            console.log("Erro ao salvar filme")
+            req.flash("error_msg", "Houve um erro ao criar sala, tente novamente!")
+            res.redirect("/register/movieTheater")
         })
     }
 })
@@ -117,7 +118,8 @@ router.get("/register/session", eAdmin, (req, res)=>{
         MovieTheater.find().lean().then((movietheather) =>{
             res.render("admin/addSession", {movies: movies, movietheather: movietheather})
         }).catch((err)=>{
-            console.log(err)
+            req.flash("error_msg", "Houve um erro ao criar sessão, tente novamente!")
+            res.redirect("/register/movieTheater")
         })
     })
 })
@@ -160,8 +162,8 @@ router.post("/register/session/new", eAdmin, (req, res)=>{
                 console.log("Sessão salva com sucesso!")
                 res.redirect("/")
             }).catch((err) =>{
-                console.log(err)
-                console.log("Erro ao salvar filme")
+                req.flash("error_msg", "Houve um erro ao criar sessão, tente novamente!")
+                res.redirect("/register/session")
             })
         })
         
@@ -174,7 +176,7 @@ router.post("/session/delete", eAdmin, (req, res) =>{
         req.flash("success_msg", "Sessão deletada com sucesso!!")
         res.redirect("/admin/edit")
     }).catch((err) =>{
-        req.flash("error_msg", "Houve um erro ao deletar a categoria")
+        req.flash("error_msg", "Houve um erro ao deletar a sessão")
         res.redirect("/admin/edit")
     })
 })
@@ -184,7 +186,7 @@ router.post("/movie/delete", eAdmin, (req, res) =>{
         req.flash("success_msg", "Sessão deletada com sucesso!!")
         res.redirect("/admin/edit")
     }).catch((err) =>{
-        req.flash("error_msg", "Houve um erro ao deletar a categoria")
+        req.flash("error_msg", "Houve um erro ao deletar a filme")
         res.redirect("/admin/edit")
     })
 })
@@ -225,9 +227,12 @@ router.post("/edit/movie/update", eAdmin, (req, res)=>{
         movie.save().then(()=>{
             res.redirect("/admin/edit")
         }).catch((err)=>{
-            console.log(err)
+            req.flash("error_msg", "Houve um erro ao editar filme")
             res.redirect("/")
         })
+    }).catch((err)=>{
+        req.flash("error_msg", "Houve um erro ao editar filme")
+        res.redirect("/")
     })
 })
 
@@ -264,11 +269,17 @@ router.post("/edit/session/update", eAdmin, (req, res)=>{
             session.save().then(()=>{
                 res.redirect("/admin/edit")
                 console.log(session)
-            }).catch((err) =>{
-                console.log(err)
+            }).catch((err)=>{
+                req.flash("error_msg", "Houve um erro ao editar sessão")
                 res.redirect("/")
-                })  
+                }) 
+            }).catch((err)=>{
+                req.flash("error_msg", "Houve um erro ao editar sessão")
+                res.redirect("/")
             })
+        }).catch((err)=>{
+            req.flash("error_msg", "Houve um erro ao editar sessão")
+            res.redirect("/")
         })
 })
 
