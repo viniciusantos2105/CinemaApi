@@ -15,7 +15,7 @@ const Client = new Schema({
         default: new Array(),
         required: true
     },
-    eAdmin:{
+    admin:{
         type: Number,
         default: 0
     },

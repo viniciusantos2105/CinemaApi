@@ -14,7 +14,16 @@
         <li class="nav-item">
           <a class="nav-link text-light" href="/catalog">Filmes</a>
         </li>
-        {{#if user}}
+        {{#if admin}}
+            <li class="nav-item">
+              <a class="nav-link text-light" href="/admin/controller">Registros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-light" href="/user/logout">Logout</a>
+            </li>
+        {{else}}
+        {{/if}}
+        {{#if client}}
             <li class="nav-item">
               <a class="nav-link text-light" href="/user/ticket">Meus ingressos</a>
             </li>
@@ -22,9 +31,12 @@
               <a class="nav-link text-light" href="/user/logout">Logout</a>
             </li>
         {{else}}
+        {{/if}}
+        {{#if deslog}}
             <li class="nav-item">
               <a class="nav-link text-light" href="/user/login">Login</a>
             </li>
+        {{else}}
         {{/if}}
       </ul>
     </div>

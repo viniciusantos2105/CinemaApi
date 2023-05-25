@@ -18,6 +18,8 @@
     const flash = require("connect-flash")
     const passport = require("passport")
     require("./config/auth")(passport)
+    require("./models/Client")
+    const Client = mongoose.model("client")
 
 //Configurações
     //Sessão
@@ -34,7 +36,16 @@
             res.locals.success_msg = req.flash("success_msg")
             res.locals.error_msg = req.flash("error_msg")
             res.locals.error = req.flash("error")
+            res.locals.deslog = "null";
             res.locals.user = req.user || null;
+            if(res.locals.user != null && res.locals.user.admin == 1){
+                res.locals.admin = "admin";
+                res.locals.deslog = null;
+            }
+            else if(res.locals.user != null && res.locals.user.admin == 0){
+                res.locals.client = "client";
+                res.locals.deslog = null;
+            }
             next()
         })
     //Body Parser
