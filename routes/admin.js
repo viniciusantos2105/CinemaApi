@@ -7,12 +7,17 @@ require("../models/MovieTheater")
 const MovieTheater = mongoose.model("movieTheater")
 require("../models/Session")
 const Session = mongoose.model("session")
+const {eAdmin} = require("../helpers/eAdmin")
 
-router.get('/register/movie', (req, res) =>{
+router.get("/controller", eAdmin, (req, res)=>{
+    res.render("admin/allRegistres")
+})
+
+router.get('/register/movie', eAdmin, (req, res) =>{
     res.render("admin/addMovie")
 })
 
-router.post("/register/movie/new", (req, res) =>{
+router.post("/register/movie/new", eAdmin, (req, res) =>{
 
     var erros = []
 
@@ -65,13 +70,13 @@ router.post("/register/movie/new", (req, res) =>{
     }
 })
 
-router.get("/register/movieTheater", (req, res) =>{
+router.get("/register/movieTheater", eAdmin, (req, res) =>{
     Movie.find().lean().sort({date: "desc"}).then((movies) =>{
         res.render("admin/addMovieTheather", {movies: movies})
     })
 })
 
-router.post("/register/movieTheater/new", (req, res)=>{
+router.post("/register/movieTheater/new", eAdmin, (req, res)=>{
 
     var erros = []
 
@@ -107,7 +112,7 @@ router.post("/register/movieTheater/new", (req, res)=>{
     }
 })
 
-router.get("/register/session", (req, res)=>{
+router.get("/register/session", eAdmin, (req, res)=>{
     Movie.find().lean().sort({date: "desc"}).then((movies) =>{
         MovieTheater.find().lean().then((movietheather) =>{
             res.render("admin/addSession", {movies: movies, movietheather: movietheather})
@@ -117,7 +122,7 @@ router.get("/register/session", (req, res)=>{
     })
 })
 
-router.post("/register/session/new", (req, res)=>{
+router.post("/register/session/new", eAdmin, (req, res)=>{
 
     var erros = []
 
@@ -164,7 +169,7 @@ router.post("/register/session/new", (req, res)=>{
 
 })
 
-router.get("/edit", (req, res)=>{
+router.get("/edit", eAdmin, (req, res)=>{
     Session.find().lean().then((session)=>{
         Movie.find().lean().sort({date: "desc"}).then((movies) =>{
             res.render("admin/movies", {movies: movies})
@@ -172,7 +177,7 @@ router.get("/edit", (req, res)=>{
     })
 })
 
-router.get("/edit/movie/:id", (req, res)=>{
+router.get("/edit/movie/:id", eAdmin, (req, res)=>{
     Movie.findById({_id: req.params.id}).lean().then((movie)=>{
         if(movie){
             Session.find({movie: movie._id}).lean().then((session) =>{
@@ -188,7 +193,7 @@ router.get("/edit/movie/:id", (req, res)=>{
        })
 })
 
-router.post("/edit/movie/update", (req, res)=>{
+router.post("/edit/movie/update", eAdmin, (req, res)=>{
     Movie.findOne({_id: req.body.id}).then((movie)=>{
         movie.name = req.body.name,
         movie.classification = req.body.classification,
@@ -206,7 +211,7 @@ router.post("/edit/movie/update", (req, res)=>{
     })
 })
 
-router.get("/edit/session/:id", (req, res)=>{
+router.get("/edit/session/:id", eAdmin, (req, res)=>{
     Movie.find().lean().sort({date: "desc"}).then((movies) =>{
         MovieTheater.find().lean().then((movietheather) =>{
             Session.findById({_id: req.params.id}).lean().then((session)=>{
@@ -226,7 +231,7 @@ router.get("/edit/session/:id", (req, res)=>{
     })
 })
 
-router.post("/edit/session/update", (req, res)=>{
+router.post("/edit/session/update", eAdmin, (req, res)=>{
     MovieTheater.findById({_id: req.body.movieTheater}).lean().then((movieTheater)=>{
         Session.findOne({_id: req.body.id}).then((session)=>{
             session.hour = req.body.hour,
